@@ -1,20 +1,36 @@
-# Projeto de Inteligência Artificial — Nome Provisório
+# Replica de Rating Prediction com Features Textuais
 
-Template educacional para o desenvolvimento de um projeto acadêmico de Machine Learning na disciplina de Inteligência Artificial. Este repositório fornece apenas uma organização inicial: a definição do problema, a análise dos dados, os modelos e os experimentos deverão ser desenvolvidos pela equipe.
+Projeto da disciplina de Inteligência Artificial dedicado à réplica do artigo *Rating Prediction in Brazilian Portuguese Reviews: An Approach Based on Textual Features*. O trabalho investiga a previsão de avaliações de produtos da Amazon Brasil, escritas em português brasileiro, utilizando características textuais e modelos tradicionais de aprendizado de máquina.
 
 ## Equipe
 
-**Nome da equipe:** _preencher_
-
 | Integrante | Conta no GitHub | Responsabilidade inicial |
 | --- | --- | --- |
-| Nome completo | `@usuario` | A definir |
-| Nome completo | `@usuario` | A definir |
-| Nome completo | `@usuario` | A definir |
+| Murilo | [`@Mur1love`](https://github.com/Mur1love) | Liderança e organização do projeto |
+| David Carvalho | [`@DaviidCarvallho`](https://github.com/DaviidCarvallho) | A definir |
+| Eduardo Araujo | [`@Duuduaraujo`](https://github.com/Duuduaraujo) | A definir |
+| Enriko Martins | [`@EnrikoMartins`](https://github.com/EnrikoMartins) | A definir |
+| João Pazzin | [`@joaoppazzin1`](https://github.com/joaoppazzin1) | A definir |
 
-## Descrição geral
+## Descrição do projeto
 
-Preencha esta seção com uma visão geral do projeto, incluindo o problema estudado, sua relevância, os objetivos e, quando definido, o conjunto de dados que será utilizado. Não inclua aqui resultados que ainda não tenham sido obtidos ou avaliados pela equipe.
+O objetivo deste projeto é reproduzir a metodologia e os experimentos apresentados no artigo de referência. A tarefa consiste em prever a nota, de 1 a 5 estrelas, atribuída por usuários da Amazon a partir apenas do texto das avaliações.
+
+A réplica investigará a extração de características textuais e a aplicação de modelos de classificação, com atenção especial aos seguintes pontos:
+
+- comparação entre SVM, Random Forest, Logistic Regression, Gradient Boosting e XGBoost;
+- avaliação de diferentes grupos de características textuais, como características léxicas, sintáticas, estruturais e de classe gramatical;
+- estudo de ablação para analisar a contribuição de cada grupo de características;
+- seleção de características por meio de Recursive Feature Elimination (RFE);
+- comparação do desempenho entre diferentes categorias de produtos.
+
+As métricas principais serão MAE, RMSE e AUC, conforme o protocolo descrito no artigo. As decisões metodológicas, resultados obtidos e diferenças em relação ao trabalho original serão documentados neste repositório ao longo do desenvolvimento.
+
+## Artigo replicado
+
+O artigo utilizado como base está disponível localmente na raiz deste repositório:
+
+- [`RatingPredictionInBrazilianPortugueseReviews.pdf`](RatingPredictionInBrazilianPortugueseReviews.pdf)
 
 ## Estrutura do repositório
 
@@ -32,6 +48,8 @@ Preencha esta seção com uma visão geral do projeto, incluindo o problema estu
 │   └── README.md
 ├── notebooks/
 │   └── .gitkeep
+├── scripts/
+│   └── check_environment.py
 ├── src/
 │   ├── data/
 │   │   └── __init__.py
@@ -46,12 +64,14 @@ Preencha esta seção com uma visão geral do projeto, incluindo o problema estu
 │   └── __init__.py
 ├── tests/
 │   ├── .gitkeep
-│   └── __init__.py
+│   ├── __init__.py
+│   └── test_environment.py
 ├── results/
 │   ├── figures/
 │   │   └── .gitkeep
 │   └── metrics/
 │       └── .gitkeep
+├── RatingPredictionInBrazilianPortugueseReviews.pdf
 ├── .gitignore
 ├── README.md
 └── requirements.txt
@@ -60,23 +80,26 @@ Preencha esta seção com uma visão geral do projeto, incluindo o problema estu
 ### Finalidade dos diretórios
 
 - `data/raw/`: datasets originais, sem alterações. Os arquivos de dados não devem ser versionados por padrão.
-- `data/processed/`: dados gerados por limpeza, transformação ou preparação. Esses arquivos também não devem ser versionados por padrão.
+- `data/processed/`: dados gerados por limpeza, transformação ou preparação.
 - `notebooks/`: análises exploratórias, experimentos e registros de investigação em Jupyter.
+- `scripts/`: utilitários executados diretamente, como a verificação do ambiente (`scripts/check_environment.py`).
 - `src/data/`: código reutilizável de carregamento e manipulação inicial dos dados.
-- `src/preprocessing/`: código reutilizável de pré-processamento.
-- `src/models/`: código de modelos e treinamento a ser desenvolvido pelos alunos.
-- `src/evaluation/`: código de avaliação e métricas a ser desenvolvido pelos alunos.
+- `src/preprocessing/`: código reutilizável de pré-processamento e extração de características.
+- `src/models/`: implementação e treinamento dos modelos.
+- `src/evaluation/`: avaliação dos modelos e cálculo das métricas.
 - `src/utils/`: funções auxiliares compartilhadas pelo projeto.
 - `tests/`: testes automatizados do código produzido pela equipe.
 - `results/figures/`: figuras e gráficos gerados pelos experimentos.
-- `results/metrics/`: resultados de métricas gerados pelos experimentos.
+- `results/metrics/`: resultados das métricas gerados pelos experimentos.
 - `.github/`: modelos para Issues e Pull Requests.
 
-Os notebooks devem apoiar a exploração e a comunicação dos experimentos. Coloque código reutilizável em `src/` para evitar concentrar toda a implementação nos notebooks.
+Os notebooks devem apoiar a exploração e a comunicação dos experimentos. O código reutilizável deve ser mantido em `src/` para evitar concentrar toda a implementação nos notebooks.
 
 ## Configuração do ambiente
 
-É recomendado utilizar Python 3.10 ou uma versão mais recente compatível com as dependências do projeto.
+O projeto requer **Python 3.12 ou mais recente** — piso exigido pelas versões travadas em `requirements.txt` (`numpy` e `scipy` exigem 3.12+). A instalação foi validada em **Linux com Python 3.14**; os comandos para Windows estão documentados abaixo, mas ainda não foram validados em uma máquina Windows.
+
+As dependências têm as versões fixadas em `requirements.txt` para garantir um ambiente reproduzível entre os integrantes.
 
 1. Clone o repositório e acesse sua pasta:
 
@@ -105,17 +128,32 @@ Os notebooks devem apoiar a exploração e a comunicação dos experimentos. Col
    .venv\Scripts\Activate.ps1
    ```
 
+   Se o PowerShell bloquear a execução do script de ativação (política padrão em algumas máquinas), execute `Set-ExecutionPolicy -Scope Process RemoteSigned` antes de ativar, ou use o prompt do cmd: `.venv\Scripts\activate.bat`.
+
 4. Instale as dependências:
 
    ```bash
-   pip install -r requirements.txt
+   python -m pip install --upgrade pip
+   python -m pip install -r requirements.txt
    ```
+
+5. Verifique a instalação:
+
+   ```bash
+   python scripts/check_environment.py
+   ```
+
+   O comando importa todas as dependências principais e imprime as versões instaladas. Se algo estiver faltando, ele termina com código de saída diferente de zero.
+
+### Decisão sobre dependências de NLP
+
+A normalização de textos (Issue 4) utilizará o **nltk**, incluído em `requirements.txt`: ele é instalável apenas via pip e oferece *stopwords* e o stemmer RSLP em português. Os dados linguísticos necessários são leves e baixados sob demanda com `nltk.download(...)` — na Issue 4 serão usados `stopwords`, `rslp` e `punkt_tab`. O **spacy** foi descartado por depender de um modelo de pipeline completo (`pt_core_news_sm`) baixado separadamente — mais pesado e mais um artefato a manter. Observação: os dados do nltk não são travados pelo `requirements.txt`; a versão utilizada deve ser registrada na documentação de decisões (Issue 11). Caso a lematização se mostre necessária, a decisão poderá ser revista na Issue 4.
 
 ## Organização dos dados
 
-Armazene os datasets originais em `data/raw/` e preserve-os sem modificações. Salve em `data/processed/` apenas os dados resultantes de limpeza, transformação ou preparação.
+Os datasets originais devem ser armazenados em `data/raw/` e preservados sem modificações. Em `data/processed/` devem ser salvos somente os dados resultantes de limpeza, transformação ou preparação.
 
-Datasets e artefatos gerados podem ser grandes ou conter informações que não devem ser publicadas. Por isso, o `.gitignore` impede o versionamento desses arquivos por padrão. Os arquivos `.gitkeep` mantêm a estrutura das pastas no Git. Se a equipe precisar compartilhar dados, deve combinar um meio apropriado e documentar como obtê-los em `data/README.md`.
+Datasets e artefatos gerados podem ser grandes ou conter informações que não devem ser publicadas. Por isso, o `.gitignore` impede o versionamento desses arquivos por padrão. A forma de obtenção dos dados e eventuais decisões de preparação devem ser documentadas em `data/README.md`.
 
 ## Fluxo de desenvolvimento
 
@@ -149,6 +187,12 @@ git switch -c issue-12-descricao-curta
 
 Faça commits pequenos e claros. Ao concluir a atividade, envie a branch e abra um Pull Request utilizando o modelo do repositório.
 
-## Observação
+## Referências
 
-Este template não contém uma solução de Machine Learning. A escolha das técnicas, a implementação, os testes, os experimentos e a análise dos resultados são responsabilidades dos alunos.
+### Artigo principal
+
+Marreira, E.; Oliveira, M.; Melo, T. *Rating Prediction in Brazilian Portuguese Reviews: An Approach Based on Textual Features*. Artigo disponibilizado neste repositório em [`RatingPredictionInBrazilianPortugueseReviews.pdf`](RatingPredictionInBrazilianPortugueseReviews.pdf).
+
+### Repositório original
+
+Marreira, E. *Rating Prediction with Textual Features*. Repositório utilizado como referência para a implementação e os experimentos: [github.com/emanuellemarreira/rating-prediction-with-textual-features](https://github.com/emanuellemarreira/rating-prediction-with-textual-features).
